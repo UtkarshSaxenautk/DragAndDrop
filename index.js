@@ -1,19 +1,20 @@
 document.addEventListener('DOMContentLoaded', function() {
-  const firstContainer = document.getElementById('firstContainer');
-  const secondContainer = document.getElementById('secondContainer');
-  const resetButton = document.getElementById('resetButton');
-  const messagePopup = document.getElementById('messagePopup');
-  const snackbar = document.getElementById('snackbar');
-  const placeholders = document.querySelectorAll('.placeholder');
-  let draggedItem = null;
-  let currentState = [];
-  let finalState = [];
+  const firstContainer = document.getElementById('firstContainer'); // Get the first container element
+  const secondContainer = document.getElementById('secondContainer'); // Get the second container element
+  const resetButton = document.getElementById('resetButton'); // Get the reset button element
+  const snackbar = document.getElementById('snackbar'); // Get the snackbar element
+  const placeholders = document.querySelectorAll('.placeholder'); // Get all placeholder elements
+  let draggedItem = null; // Variable to store the dragged item
+  let currentState = []; // Array to store the current state of the containers
+  let finalState = []; // Array to store the final state of the containers
 
+  // Function to move an item to a target list
   function moveItem(item, targetList) {
-      targetList.appendChild(item);
-      return true;
+    targetList.appendChild(item);
+    return true;
   }
 
+  // Event handler for drag start
   function handleDragStart(e) {
     draggedItem = e.target;
     e.dataTransfer.effectAllowed = 'move';
@@ -22,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
     snackbar.classList.remove('show');
   }
 
+  // Event handler for drag over
   function handleDragOver(e) {
     e.preventDefault();
     const target = e.target.closest('ul');
@@ -34,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  // Event handler for drag leave
   function handleDragLeave(e) {
     const target = e.target.closest('ul');
     if (target === firstContainer || target === secondContainer) {
@@ -44,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  // Event handler for drop
   function handleDrop(e) {
     e.preventDefault();
     const target = e.target.closest('ul');
@@ -57,13 +61,12 @@ document.addEventListener('DOMContentLoaded', function() {
       draggedItem.classList.remove('dragging');
       draggedItem = null;
 
-        if (isMoveSuccessful) {
-            if (target === firstContainer) {
-              snackbar.textContent = 'Item moved from list 2 to list 1'
-            } else {
-                snackbar.textContent = 'Item moved from list 1 to list 2' 
-          }
-        //snackbar.textContent = 'Item moved successfully!';
+      if (isMoveSuccessful) {
+        if (target === firstContainer) {
+          snackbar.textContent = 'Item moved from list 2 to list 1';
+        } else {
+          snackbar.textContent = 'Item moved from list 1 to list 2';
+        }
         snackbar.classList.add('show');
 
         setTimeout(function() {
@@ -76,6 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  // Event handler for reset button click
   function handleReset() {
     secondContainer.innerHTML = ''; // Clear secondContainer (list2)
     firstContainer.innerHTML = '';
@@ -84,6 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  // Event handler for drag end
   function handleDragEnd() {
     if (draggedItem) {
       draggedItem.classList.remove('dragging');
@@ -96,6 +101,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }, 2000);
     }
   }
+
+  // Add event listeners
 
   firstContainer.addEventListener('dragstart', handleDragStart);
   secondContainer.addEventListener('dragstart', handleDragStart);
@@ -119,6 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
   secondContainer.addEventListener('dragend', handleDragEnd);
 
   // Generate random images and text for list items
+
   const randomImages = [
     'https://cdn-icons-png.flaticon.com/128/226/226777.png',
     'https://cdn-icons-png.flaticon.com/128/1199/1199124.png',
@@ -130,6 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const randomTexts = ['Java', 'Javascript', 'C++', 'Html', 'Css'];
 
   // Generate list items for both list1 and list2
+
   for (let i = 0; i < 5; i++) {
     const listItem = document.createElement('li');
     listItem.classList.add('containerItem');
