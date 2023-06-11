@@ -28,4 +28,4 @@ No external dependencies are required to run this application.
 
 ## Author
 
-This application was created by Shruti.
+This application was created by Utkarsh.
